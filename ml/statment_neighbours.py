@@ -8,8 +8,8 @@ import pandas as pd
 
 data = pd.read_csv(r'C:\Users\olllk\Downloads\wine.data', header=None)
 
-y = data[0]
-x = data.loc[:, 1:]
+y = data[0]  # целевая переменная
+x = data.loc[:, 1:]  # признаки
 print(x)
 gen = KFold(shuffle=True, n_splits=5, random_state=42)
 
