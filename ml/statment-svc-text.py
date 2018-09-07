@@ -3,7 +3,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 import numpy as np
 from sklearn.model_selection import KFold
 from sklearn.svm import SVC
-from sklearn.grid_search import GridSearchCV
+from sklearn.model_selection import GridSearchCV
 import pandas
 
 # Загрузите объекты из новостного датасета 20 newsgroups, относящиеся к категориям "космос" и "атеизм"
