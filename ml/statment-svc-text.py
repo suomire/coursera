@@ -33,17 +33,12 @@ C = 1.0
 # Обучите SVM по всей выборке с оптимальным параметром C, найденным на предыдущем шаге.
 clf = SVC(kernel='linear', random_state=241, C=C)
 gs.fit(VX, y)
-res = gs.best_estimator_.coef_
+res1 = gs.best_estimator_.coef_.data
+res2 = gs.best_estimator_.coef_.indices
+feature_mapping = vectorizer.get_feature_names()
 # Найдите 10 слов с наибольшим абсолютным значением веса (веса хранятся в поле coef_ у svm.SVC).
 #  Они являются ответом на это задание. Укажите эти слова через запятую или пробел, в нижнем регистре,
 #  в лексикографическом порядке.
-row = res.getrow(0).toarray()[0].ravel()
-top_ten = np.argsort(abs(row))[-10:]
-top_ten_ind = row[top_ten]
-feature_mapping = vectorizer.get_feature_names
-words = list()
-for a in top_ten:
-    print(feature_mapping[a])
-    #words.append(feature_mapping[a])
-#words = words.sort()
-#print(words)
+dat = pandas.DataFrame(res1, res2)
+rs = dat[0].map(lambda w: abs(w)).sort_values(ascending=False).head(10).index.map(lambda i: feature_mapping[i])
+print(rs)

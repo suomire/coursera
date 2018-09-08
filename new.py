@@ -1,6 +1,6 @@
-from sklearn import datasets
+import pandas
+import numpy
 
-newsgroups = datasets.fetch_20newsgroups(
-                    subset='all',
-                    categories=['alt.atheism', 'sci.space']
-)
+data = pandas.read_table(r'C:\Users\olllk\Desktop\1.txt', sep=' ', header=None)
+
+print(data)
