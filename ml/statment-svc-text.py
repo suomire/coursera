@@ -26,4 +26,24 @@ grid = {'C': np.float_power(10, arr)}
 cv = KFold(n_splits=5, shuffle=True, random_state=241)  # генератор разбиений
 clf = SVC(kernel='linear', random_state=241)
 gs = GridSearchCV(clf, grid, scoring='accuracy', cv=cv)
-gs.fit(vectorizer.transform(X), y)
+VX = vectorizer.transform(X)
+# gs.fit(VX, y)
+# C = gs.best_params_.get('C')
+C = 1.0
+# Обучите SVM по всей выборке с оптимальным параметром C, найденным на предыдущем шаге.
+clf = SVC(kernel='linear', random_state=241, C=C)
+gs.fit(VX, y)
+res = gs.best_estimator_.coef_
+# Найдите 10 слов с наибольшим абсолютным значением веса (веса хранятся в поле coef_ у svm.SVC).
+#  Они являются ответом на это задание. Укажите эти слова через запятую или пробел, в нижнем регистре,
+#  в лексикографическом порядке.
+row = res.getrow(0).toarray()[0].ravel()
+top_ten = np.argsort(abs(row))[-10:]
+top_ten_ind = row[top_ten]
+feature_mapping = vectorizer.get_feature_names
+words = list()
+for a in top_ten:
+    print(feature_mapping[a])
+    #words.append(feature_mapping[a])
+#words = words.sort()
+#print(words)
